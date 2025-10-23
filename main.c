@@ -83,7 +83,9 @@ void cityManagement(){
                         distance[x][y]=-1;
                 }
             }
-        }else printf("Max Cities Reached.\n");
+        }else {
+            printf("Max Cities Reached.\n");
+        }
     }else if(choice==2){
         int index;
         printf("Enter city index to rename city\n");
@@ -92,22 +94,31 @@ void cityManagement(){
             printf("Enter new name \n");
             scanf("%s",cities[index]);
             printf("Changed successfully\n");
-        }else printf("Invalid index!\n");
+        }else {
+            printf("Invalid index!\n");
+    }
     }else if(choice==3){
         int i;
         int j;
+        int k;
         printf("Enter city index to remove:");
         scanf("%d",&i);
-        if(i>=0 && index<cityCount){
+        if(i>=0 && i<cityCount){
             for(j=i;j<cityCount-1;i++);
                 strcpy(cities[i],cities[i+1]);
-                cityCount--;
-                printf("City removed \n");
-        }else printf("Invalid index\n");
-    }else if(choice==4){
-        int k;
-        for (k=0;k<cityCount;k++){
-            printf("%d. %s\n",k,cities[k]);
+        }
+        for (j=i;j<cityCount-1;j++){
+            for (k=0;k<cityCount;k++){
+                distance[j][k]=distance[j+1][k];
+                distance[k][j]=distance[k][j+1];
+                }
+        }
+        cityCount--;
+        printf("City removed\n");
+    } else if(choice==4){
+        int n;
+        for (n=0;n<cityCount;n++){
+            printf("%d. %s\n",n,cities[n]);
         }
 
     }
@@ -185,4 +196,4 @@ do{
 
 
 
-}
+

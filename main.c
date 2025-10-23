@@ -3,6 +3,10 @@
 #include <string.h>
 #define MAX_CITIES 30
 #define MAX_DELIVERIES 50
+char cities[MAX_CITIES][50];
+int distance[MAX_CITIES][MAX_CITIES];
+int cityCount=0;
+
 
 void cityManagement();
 void distanceManagement();
@@ -13,8 +17,6 @@ void reports();
 int main()
 {
     int choice;
-    char cities[MAX_CITIES][50];
-    int cityCount=0;
     do{
         printf("---------LOGISTICS MANAGEMENT SYSTEM-------\n");
         printf("1. City Management \n");
@@ -55,6 +57,8 @@ return 0;
 void cityManagement(){
     int choice;
     char name[50];
+    int x;
+    int y;
     do{
       printf("-----------CITY MANAGEMENT--------\n");
       printf("1. Add City\n");
@@ -71,6 +75,14 @@ void cityManagement(){
             scanf("%s",cities[cityCount]);
             cityCount++;
             printf("City Saved");
+            for (x=0;x<cityCount;x++){
+                for(y=0;y<cityCount;y++){
+                    if (x==y)
+                        distance[x][y]=0;
+                    else if (distance[x][y]==0)
+                        distance[x][y]=-1;
+                }
+            }
         }else printf("Max Cities Reached.\n");
     }else if(choice==2){
         int index;
@@ -94,10 +106,83 @@ void cityManagement(){
         }else printf("Invalid index\n");
     }else if(choice==4){
         int k;
-        for (k=0:k<cityCount;k++){
+        for (k=0;k<cityCount;k++){
             printf("%d. %s\n",k,cities[k]);
         }
 
     }
-    }while(choice!=0);
+    }while(choice!=5);
+}
+void distanceManagement(){
+    if (cityCount<2){
+        printf("Please add atleast two cities first \n");
+        return;
+    }
+int i;
+int j;
+int choice;
+int dist;
+do{
+     printf("-------DISTANCE MANAGEMENT------\n");
+     printf("1.View all Distances\n");
+     printf("2.Edit distances between cities\n");
+     printf("3.Back to main menu\n");
+     printf("Enter your choice:");
+     scanf("%d",&choice);
+
+    switch(choice){
+    case 1:
+        printf("DISTANCES\n");
+        for (i=0;i<cityCount;i++){
+            printf("%10s",cities[i]);
+            printf("\n");
+        }
+        for (i=0;i<cityCount;i++){
+            printf("%-10s",cities[i]);
+            for (j=0;j<cityCount;j++){
+                printf("%10d",distance[i][j]);
+            }
+            printf("\n");
+        }
+        break;
+    case 2:
+        printf("Enter 1st city index(0-%d):",cityCount-1);
+        scanf("%d",&i);
+        printf("Enter destination city number(0-%d):",cityCount-1);
+        scanf("%d",&j);
+        if (i==j){
+            printf("Distance to self is always 0");
+            distance[i][j]=0;
+            break;
+            }
+        if (i>=cityCount || j>=cityCount || i<0 || j<0){
+            printf("Invalid city index.\n");
+            break;
+        }
+        printf("Enter distance between %s and %s (km)",cities[i],cities[j]);
+        scanf("%d",&dist);
+        distance[i][j]=dist;
+        distance[j][i]=dist;
+        printf("Saved successfully\n");
+        break;
+    case 3:
+        printf("Returning to main menu...\n");
+        break;
+    default:
+        printf("Invalid choice. \n");
+    }
+}while (choice!=3);
+}
+
+
+
+
+
+
+
+
+
+
+
+
 }

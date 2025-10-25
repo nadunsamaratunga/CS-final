@@ -3,9 +3,16 @@
 #include <string.h>
 #define MAX_CITIES 30
 #define MAX_DELIVERIES 50
+#define MAX VEHICLES 3
 char cities[MAX_CITIES][50];
 int distance[MAX_CITIES][MAX_CITIES];
 int cityCount=0;
+char vehicleTypes[MAX VEHICLES][50]={"Van","Truck","Lorry"};
+int vehicleMatrix[MAX_VEHICLES][4]={
+        {1000,30,60,12}
+        {500,40,50,6}
+        {10000,80,45,4}
+    };
 
 
 void cityManagement();
@@ -183,6 +190,36 @@ do{
         printf("Invalid choice. \n");
     }
 }while (choice!=3);
+}
+void vehicleManagement(){
+    int choice;
+    do{
+    printf("----VEHICLE MANAGEMENT-----\n");
+    printf("1.View vehicle details\n");
+    printf("2.Back to main menu\n");
+    scanf("%d",&choice);
+
+    switch(choice){
+    case 1:
+        int i;
+        int j;
+        printf("%-5s %-10s %-10s %-10s %-10s %-10s\n","No", "Type", "Capacity", "Rate/km", "Speed", "Efficiency"");
+        for (i=0;i<3;i++){
+            printf("%s",vehicleTypes[i]);
+            for (j=0;j<4;j++){
+                printf("%-5d %-10s %-10d %-10d %-10d %-10d\n",vehicleMatrix[i][j]);
+                }
+        }
+        break;
+    case 2:
+        printf("Returning to main menu");
+        break;
+    default:
+        printf("Invalid Choice");
+        break;
+    }
+    }
+    while(choice!=2);
 }
 
 

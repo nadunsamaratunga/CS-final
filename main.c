@@ -13,6 +13,21 @@ int vehicleMatrix[MAX_VEHICLES][4]={
         {500,40,50,6},
         {10000,80,45,4},
     };
+typedef struct{
+    int source;
+    int destination;
+    float weight;
+    int vehicleType;
+    float distance;
+    float deliveryCost;
+    float fuelCost;
+    float totalCost;
+    float profit;
+    float customerCharge;
+    float time;
+} Delivery;
+Delivery deliveries[MAX_DELIVERIES];
+int deliveryCount=0;
 
 
 void cityManagement();
@@ -255,6 +270,32 @@ void deliveryHandling(){
                 printf("Error: Weight exceeds selected vehicle's capacity\n");
                 return;
             }
+            int D=distance[source-1[dest-1];
+            float R=vehicleMatrix[vehicleType-1[1];
+            float S=vehicleMatrix[vehicleType-1][2];
+            float E=vehicleMatrix[vehicleType-1][3];
+            float F=310;
+
+            float deliveryCost=D*R*(1+(weight/1000.0));
+            float deliveryTime=D/S;
+            float fuelUsed=D/E;
+            float fuelCost=deliveryCost+fuelCost;
+            float totalCost=delivery+fuelCost;
+            float profit=deliveryCost*0.25;
+            float customerCharge=totalCost+profit;
+
+            deliveries[deliveryCount].source=source-1;
+            deliveries[deliveryCount].destination=dest-1;
+            deliveries[deliveryCount].weight=weight;
+            deliveries[deliveryCount].vehicleType=vehicleType-1;
+            deliveries[deliveryCount].distance=D;
+            deliveries[deliveryCount].deliveryCost=deliveryCost;
+            deliveries[deliveryCount].fuelCost=fuelCost;
+            deliveries[deliveryCount].totalCost=totalCost;
+            deliveries[deliveryCount].profit=profit;
+            deliveries[deliveryCount].customerCharge=customerCharge;
+            deliveries[deliveryCount].time=deliveryTime;
+            deliveryCount++;
             break;
             case 2:
                 reports(source-1,dest-1,weight,vehicleType-1);

@@ -3,15 +3,15 @@
 #include <string.h>
 #define MAX_CITIES 30
 #define MAX_DELIVERIES 50
-#define MAX VEHICLES 3
+#define MAX_VEHICLES 3
 char cities[MAX_CITIES][50];
 int distance[MAX_CITIES][MAX_CITIES];
 int cityCount=0;
-char vehicleTypes[MAX VEHICLES][50]={"Van","Truck","Lorry"};
+char vehicleTypes[MAX_VEHICLES][50]={"Van","Truck","Lorry"};
 int vehicleMatrix[MAX_VEHICLES][4]={
-        {1000,30,60,12}
-        {500,40,50,6}
-        {10000,80,45,4}
+        {1000,30,60,12},
+        {500,40,50,6},
+        {10000,80,45,4},
     };
 
 
@@ -193,6 +193,7 @@ do{
 }
 void vehicleManagement(){
     int choice;
+    int i;
     do{
     printf("----VEHICLE MANAGEMENT-----\n");
     printf("1.View vehicle details\n");
@@ -201,14 +202,10 @@ void vehicleManagement(){
 
     switch(choice){
     case 1:
-        int i;
-        int j;
-        printf("%-5s %-10s %-10s %-10s %-10s %-10s\n","No", "Type", "Capacity", "Rate/km", "Speed", "Efficiency"");
-        for (i=0;i<3;i++){
-            printf("%s",vehicleTypes[i]);
-            for (j=0;j<4;j++){
-                printf("%-5d %-10s %-10d %-10d %-10d %-10d\n",vehicleMatrix[i][j]);
-                }
+
+        printf("%-5s %-10s %-10s %-10s %-10s %-10s\n","No", "Type", "Capacity", "Rate/km", "Speed", "Efficiency");
+        for (i=0;i<MAX_VEHICLES;i++){
+                printf("%-5d %-10s %-10d %-10d %-10d %-10d\n",i+1,vehicleTypes[i],vehicleMatrix[i][0],vehicleMatrix[i][1],vehicleMatrix[i][2],vehicleMatrix[i][3]);
         }
         break;
     case 2:

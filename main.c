@@ -19,7 +19,7 @@ void cityManagement();
 void distanceManagement();
 void vehicleManagement();
 void deliveryHandling();
-void reports();
+void reports(int source,int dest,float weight,int vehicleType);
 
 int main()
 {
@@ -257,7 +257,7 @@ void deliveryHandling(){
             }
             break;
             case 2:
-                reports();
+                reports(source-1,dest-1,weight,vehicleType-1);
                 break;
             case 3:
                 printf("Returning to main menu\n");
@@ -269,7 +269,42 @@ void deliveryHandling(){
         }
         while (choice!=3);
 }
+void reports(int source,int dest,float weight,int vehicleType){
+        int D=distance[source][dest];
+        float W=weight;
+        float R=vehicleMatrix[vehicleType-1][1];
+        float S=vehicleMatrix[vehicleType-1][2];
+        float E=vehicleMatrix[vehicleType-1][3];
+        float F=310;
 
+        float deliveryCost=D*R*(1+(W/1000.0));
+        float deliveryTime=D/S;
+        float fuelUsed=D/E;
+        float fuelCost=fuelUsed*F;
+        float totalCost=deliveryCost+fuelCost;
+        float profit=deliveryCost*0.25;
+        float customerCharge=totalCost+profit;
+
+        printf("\n-------DELIVERY SUMMARY------\n");
+        printf("From: %-10s\n",cities[source]);
+        printf("To: %-10s\n",cities[dest]);
+        printf("Vehicle Type: %-10s\n",vehicleTypes[vehicleType-1]);
+        printf("---------------------------\n");
+        printf("Distance:%-10d km\n",D);
+        printf("Rate per km:%-10.2f LKR\n",R);
+        printf("Weight:%-10.2f kg\n",W);
+        printf("Efficiency:%-10.2f km/l\n",E);
+        printf("Fuel Price:%-10.2f LKR\n",F);
+        printf("----------------------------\n");
+        printf("Delivery Cost:%-10.2f LKR\n",deliveryCost);
+        printf("Estimated Time:%-10.2f hours\n",deliveryTime);
+        printf("Fuel Used:%-10.2f liters\n",fuelUsed);
+        printf("Fuel Cost:%-10.2f LKR\n",fuelCost);
+        printf("Total Operational Cost:%-10.2f LKR\n",totalCost);
+        printf("Profit (25%%):%-10.2f LKR\n",profit);
+        printf("Final Charge to Customer:%-10.2f LKR\n",customerCharge);
+        printf("===================================\n");
+}
 
 
 

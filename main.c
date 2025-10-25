@@ -202,7 +202,6 @@ void vehicleManagement(){
 
     switch(choice){
     case 1:
-
         printf("%-5s %-10s %-10s %-10s %-10s %-10s\n","No", "Type", "Capacity", "Rate/km", "Speed", "Efficiency");
         for (i=0;i<MAX_VEHICLES;i++){
                 printf("%-5d %-10s %-10d %-10d %-10d %-10d\n",i+1,vehicleTypes[i],vehicleMatrix[i][0],vehicleMatrix[i][1],vehicleMatrix[i][2],vehicleMatrix[i][3]);
@@ -218,7 +217,62 @@ void vehicleManagement(){
     }
     while(choice!=2);
 }
+void deliveryHandling(){
+    int source;
+    int dest;
+    int vehicleType;
+    float weight;
+    int choice;
+    int i;
+    printf("-------DELIVERY REQUEST HANDLING------\n");
+    do{
+        printf("1.Enter a new report\n");
+        printf("2.View Reports\n");
+        printf("3.Return to main menu\n");
+        scanf("%d",&choice);
 
+        switch (choice){
+            case 1:
+                printf("Available Cities: \n");
+                for (i=0;i<cityCount;i++){
+                    printf("%d. %s\n",i+1,cities[i]);
+                }
+            printf("\n Enter source city index: \n");
+            scanf("%d",&source);
+            printf("Enter destination city index: \n");
+            scanf("%d",&dest);
+            if (source==dest){
+                printf("Error: The source cannot be the same as the destination\n");
+                return;
+            }
+            printf("Enter weight (in kg):\n");
+            scanf("%f",&weight);
+            printf("\nSelect vehicle type\n");
+            printf("1. Van\n2. Truck\n3. Lorry \n");
+            scanf("%d",&vehicleType);
+            if (vehicleType<1||vehicleType>3){
+                printf("Invalid vehicle type \n");
+                return;
+            }
+            int capacity=vehicleMatrix[vehicleType-1][0];
+            if (weight>capacity){
+                printf("Error: Weight exceeds selected vehicle's capacity\n");
+                return;
+            }
+            break;
+            case 2:
+                reports();
+                break;
+            case 3:
+                printf("Returning to main menu\n");
+                break;
+            default:
+                printf("Invalid choice\n");
+                break;
+        }
+        }
+        while (choice!=3);
+}
 
 
 

@@ -29,9 +29,8 @@ int main()
         printf("1. City Management \n");
         printf("2. Distance Management \n");
         printf("3. Vehicle Management \n");
-        printf("4. Delivery Handling \n");
-        printf("5. Reports \n");
-        printf("6. Exit \n");
+        printf("4. Delivery Handling & Reports \n");
+        printf("5. Exit \n");
         printf("Enter your choice:\n");
         scanf("%d",&choice);
 
@@ -49,15 +48,12 @@ int main()
             deliveryHandling();
             break;
         case 5:
-            reports();
-            break;
-        case 6:
             printf("Exiting Program..");
             break;
         default:
-            printf("Invalid Input...Please enter a number (1-6)");
+            printf("Invalid Input...Please enter a number (1-5)");
         }
-    }while (choice!=6);
+    }while (choice!=5);
 
 return 0;
 }

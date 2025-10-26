@@ -38,6 +38,7 @@ void deliveryHandling();
 float findLeastCostRoute(int source,int dest,int path[]);
 void reports(int source,int dest,float weight,int vehicleType);
 void viewDeliveries();
+void performanceReports();
 
 int main()
 {
@@ -48,7 +49,8 @@ int main()
         printf("2. Distance Management \n");
         printf("3. Vehicle Management \n");
         printf("4. Delivery Handling & Reports \n");
-        printf("5. Exit \n");
+        printf("5. Performance Reports \n");
+        printf("6. Exit \n");
         printf("Enter your choice:\n");
         scanf("%d",&choice);
 
@@ -66,12 +68,15 @@ int main()
             deliveryHandling();
             break;
         case 5:
+            performanceReports();
+            break;
+        case 6:
             printf("Exiting Program..");
             break;
         default:
-            printf("Invalid Input...Please enter a number (1-5)");
+            printf("Invalid Input...Please enter a number (1-6)");
         }
-    }while (choice!=5);
+    }while (choice!=6);
 
 return 0;
 }
@@ -438,6 +443,39 @@ void viewDeliveries(){
         printf("Estimated Time: %-10.2f hours\n",deliveries[i].time);
         printf("------------------------------------\n");
          }
+ }
+ void performanceReports(){
+        if (deliveryCount==0){
+            printf("\nNo deliveries recorded yet.\n");
+            return;
+        }
+ float totalDistance=0;
+ float totalTime=0;
+ float totalRevenue=0;
+ float totalProfit=0;
+ float longest=deliveries[0].distance;
+ float shortest=deliveries[0].distance;
+ int i;
+
+ for (i=0;i<deliveryCount;i++){
+    totalDistance+=deliveries[i].distance;
+    totalTime+=deliveries[i].time;
+    totalRevenue+=deliveries[i].customerCharge;
+    totalProfit+=deliveries[i].profit;
+    if (deliveries[i].distance>longest)
+        longest=deliveries[i].distance;
+    if (deliveries[i].distance<shortest)
+        shortest=deliveries[i].distance;
+ }
+ float avgTime=totalTime/deliveryCount;
+ printf("\n=======PERFORMANCE REPORTS==========\n");
+ printf("Total deliveries completed: %d\n",deliveryCount);
+ printf("Total distance covered    : %.2f km\n",totalDistance);
+ printf("Average delivery time     : %.2f hours\n",avgTime);
+ printf("Total revenue earned      : %.2f LKR\n",totalProfit);
+ printf("Longest route completed   : %.2f km\n",longest);
+ printf("Shortest route completed  : %.2f km\n",shortest);
+ printf("=======================================\n");
  }
 
 

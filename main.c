@@ -82,6 +82,7 @@ return 0;
 }
 void cityManagement(){
     int choice;
+    char input;
     char name[50];
     int x;
     int y;
@@ -97,10 +98,13 @@ void cityManagement(){
 
       if (choice==1){
         if (cityCount<MAX_CITIES){
+            do{
             printf("Enter new City name:");
             scanf("%s",cities[cityCount]);
             cityCount++;
-            printf("City Saved");
+            printf("City Saved\n");
+            printf("Do you want to add another city? (Y/N):\n");
+            scanf(" %c", &input);
             for (x=0;x<cityCount;x++){
                 for(y=0;y<cityCount;y++){
                     if (x==y)
@@ -109,6 +113,7 @@ void cityManagement(){
                         distance[x][y]=-1;
                 }
             }
+            }while (input!='n' && input!='N');
         }else {
             printf("Max Cities Reached.\n");
         }
@@ -143,10 +148,12 @@ void cityManagement(){
         printf("City removed\n");
     } else if(choice==4){
         int n;
-        for (n=0;n<cityCount;n++){
-            printf("%d. %s\n",n,cities[n]);
+        if (cityCount<1){
+            printf("No data entered yet\n");
         }
-
+        for (n=0;n<cityCount;n++){
+            printf("%d. %s\n",n+1,cities[n]);
+        }
     }
     }while(choice!=5);
 }

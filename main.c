@@ -48,10 +48,10 @@ int main()
 {
     loadRoutes();
     loadDeliveries();
-
+    printf("====== LOGISTICS MANAGEMENT SYSTEM ======\n");
     int choice;
     do{
-        printf("---------LOGISTICS MANAGEMENT SYSTEM-------\n");
+        printf("============== MAIN MENU ===============\n");
         printf("1. City Management \n");
         printf("2. Distance Management \n");
         printf("3. Vehicle Management \n");
@@ -94,7 +94,7 @@ void cityManagement(){
     int x;
     int y;
     do{
-      printf("-----------CITY MANAGEMENT--------\n");
+      printf("=========== CITY MANAGEMENT =============\n");
       printf("1. Add City\n");
       printf("2. Rename City \n");
       printf("3. Remove City \n");
@@ -155,6 +155,7 @@ void cityManagement(){
         printf("City removed\n");
     } else if(choice==4){
         int n;
+        printf("-------------- LIST OF CITIES -----------\n");
         if (cityCount<1){
             printf("No data entered yet\n");
         }
@@ -174,7 +175,7 @@ int j;
 int choice;
 int dist;
 do{
-     printf("-------DISTANCE MANAGEMENT------\n");
+     printf("=========== DISTANCE MANAGEMENT =========\n");
      printf("1.View all Distances\n");
      printf("2.Edit distances between cities\n");
      printf("3.Back to main menu\n");
@@ -183,7 +184,7 @@ do{
 
     switch(choice){
     case 1:
-        printf("--------DISTANCES--------\n");
+        printf("--------------- DISTANCES ---------------\n");
         printf("%-10s","");
         for (i=0;i<cityCount;i++){
             printf("%10s",cities[i]);
@@ -199,14 +200,14 @@ do{
         }
         break;
     case 2:
-        printf("Enter 1st city index(1-%d):",cityCount-1);
+        printf("Enter 1st city index(1-%d):",cityCount);
         scanf("%d",&i);
-        printf("Enter destination city number(1-%d):",cityCount-1);
+        printf("Enter destination city number(1-%d):",cityCount);
         scanf("%d",&j);
         i--;
         j--;
         if (i==j){
-            printf("Distance to self is always 0");
+            printf("Distance to self is always 0\n");
             distance[i][j]=0;
             break;
             }
@@ -232,7 +233,7 @@ void vehicleManagement(){
     int choice;
     int i;
     do{
-    printf("----VEHICLE MANAGEMENT-----\n");
+    printf("========== VEHICLE MANAGEMENT ===========\n");
     printf("1.View vehicle details\n");
     printf("2.Back to main menu\n");
     printf("Enter your choice: \n");
@@ -240,7 +241,7 @@ void vehicleManagement(){
 
     switch(choice){
     case 1:
-        printf("\n---------VEHICLE DETAILS--------------\n");
+        printf("\n------------------- VEHICLE DETAILS ------------------------\n");
         printf("%-5s %-10s %-10s %-10s %-10s %-10s\n","No", "Type", "Capacity", "Rate/km", "Speed", "Efficiency");
         for (i=0;i<MAX_VEHICLES;i++){
                 printf("%-5d %-10s %-10d %-10d %-10d %-10d\n",i+1,vehicleTypes[i],vehicleMatrix[i][0],vehicleMatrix[i][1],vehicleMatrix[i][2],vehicleMatrix[i][3]);
@@ -265,7 +266,7 @@ void deliveryHandling(){
     int i;
     int path[MAX_CITIES];
     float minDistance=0;
-    printf("-------DELIVERY REQUEST HANDLING------\n");
+    printf("========== DELIVERY HANDLING ============\n");
     do{
         printf("1.Enter a new report\n");
         printf("2.View Reports\n");
@@ -362,17 +363,17 @@ void reports(int source,int dest,float weight,int vehicleType){
         float profit=deliveryCost*0.25;
         float customerCharge=totalCost+profit;
 
-        printf("\n-------DELIVERY SUMMARY------\n");
+        printf("\n------------ DELIVERY SUMMARY -----------\n");
         printf("From        : %s\n",cities[source]);
         printf("To          : %s\n",cities[dest]);
         printf("Vehicle Type: %s\n",vehicleTypes[vehicleType-1]);
-        printf("---------------------------\n");
+        printf("----------------------------------------\n");
         printf("Distance    :%d km\n",D);
         printf("Rate per km :%.2f LKR\n",R);
         printf("Weight      :%.2f kg\n",W);
         printf("Efficiency  :%.2f km/l\n",E);
         printf("Fuel Price  :%.2f LKR\n",F);
-        printf("----------------------------\n");
+        printf("----------------------------------------\n");
         printf("Delivery Cost           :%.2f LKR\n",deliveryCost);
         printf("Estimated Time          :%.2f hours\n",deliveryTime);
         printf("Fuel Used               :%.2f liters\n",fuelUsed);
@@ -381,18 +382,6 @@ void reports(int source,int dest,float weight,int vehicleType){
         printf("Profit (25%%)           :%.2f LKR\n",profit);
         printf("Final Charge to Customer:%.2f LKR\n",customerCharge);
         printf("===================================\n");
-        deliveries[deliveryCount].source=source;
-        deliveries[deliveryCount].destination=dest;
-        deliveries[deliveryCount].weight=weight;
-        deliveries[deliveryCount].vehicleType=vehicleType + 1;
-        deliveries[deliveryCount].distance=D;
-        deliveries[deliveryCount].deliveryCost=deliveryCost;
-        deliveries[deliveryCount].fuelCost=fuelCost;
-        deliveries[deliveryCount].totalCost=totalCost;
-        deliveries[deliveryCount].profit=profit;
-        deliveries[deliveryCount].customerCharge=customerCharge;
-        deliveries[deliveryCount].time=deliveryTime;
-        deliveryCount++;
 }
 float findLeastCostRoute(int source,int dest,int path[]){
     int visited[MAX_CITIES];
@@ -458,7 +447,7 @@ void viewDeliveries(){
         printf("\nNo delivery  records yet. \n");
         return;
         }
-    printf("\n-------------DELIVERY RECORDS----------\n");
+    printf("\n------------ DELIVERY RECORDS -----------\n");
     int i;
     for(i=0;i<deliveryCount;i++){
        printf("\nDelivery #%d\n",i+1);
@@ -473,7 +462,7 @@ void viewDeliveries(){
         printf("Profit         : %.2f LKR\n",deliveries[i].profit);
         printf("Customer Charge: %.2f LKR\n",deliveries[i].customerCharge);
         printf("Estimated Time : %.2f hours\n",deliveries[i].time);
-        printf("------------------------------------\n");
+        printf("----------------------------------------\n");
          }
  }
  void performanceReports(){
@@ -500,7 +489,7 @@ void viewDeliveries(){
         shortest=deliveries[i].distance;
  }
  float avgTime=totalTime/deliveryCount;
- printf("\n=======PERFORMANCE REPORTS==========\n");
+ printf("\n=========== PERFORMANCE REPORTS =========\n");
  printf("Total deliveries completed: %d\n",deliveryCount);
  printf("Total distance covered    : %.2f km\n",totalDistance);
  printf("Average delivery time     : %.2f hours\n",avgTime);
@@ -508,7 +497,7 @@ void viewDeliveries(){
  printf("Total profit earned       : %.2f LKR\n",totalProfit);
  printf("Longest route completed   : %.2f km\n",longest);
  printf("Shortest route completed  : %.2f km\n",shortest);
- printf("=======================================\n");
+ printf("========================================\n");
  int userInput;
  printf("Press 1 to return to main menu\n");
  scanf("%d",&userInput);

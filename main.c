@@ -4,6 +4,7 @@
 #define MAX_CITIES 30
 #define MAX_DELIVERIES 50
 #define MAX_VEHICLES 3
+
 char cities[MAX_CITIES][50];
 int distance[MAX_CITIES][MAX_CITIES];
 int cityCount=0;
@@ -35,6 +36,7 @@ void distanceManagement();
 void vehicleManagement();
 void deliveryHandling();
 void reports(int source,int dest,float weight,int vehicleType);
+void viewDeliveries();
 
 int main()
 {
@@ -239,7 +241,8 @@ void deliveryHandling(){
     do{
         printf("1.Enter a new report\n");
         printf("2.View Reports\n");
-        printf("3.Return to main menu\n");
+        printf("3.View all deliveries\n");
+        printf("4.Return to main menu\n");
         scanf("%d",&choice);
 
         switch (choice){
@@ -270,8 +273,8 @@ void deliveryHandling(){
                 printf("Error: Weight exceeds selected vehicle's capacity\n");
                 return;
             }
-            int D=distance[source-1[dest-1];
-            float R=vehicleMatrix[vehicleType-1[1];
+            int D=distance[source-1][dest-1];
+            float R=vehicleMatrix[vehicleType-1][1];
             float S=vehicleMatrix[vehicleType-1][2];
             float E=vehicleMatrix[vehicleType-1][3];
             float F=310;
@@ -280,7 +283,7 @@ void deliveryHandling(){
             float deliveryTime=D/S;
             float fuelUsed=D/E;
             float fuelCost=deliveryCost+fuelCost;
-            float totalCost=delivery+fuelCost;
+            float totalCost=deliveryCost+fuelCost;
             float profit=deliveryCost*0.25;
             float customerCharge=totalCost+profit;
 
@@ -301,6 +304,9 @@ void deliveryHandling(){
                 reports(source-1,dest-1,weight,vehicleType-1);
                 break;
             case 3:
+                viewDeliveries();
+                break;
+            case 4:
                 printf("Returning to main menu\n");
                 break;
             default:
@@ -308,7 +314,7 @@ void deliveryHandling(){
                 break;
         }
         }
-        while (choice!=3);
+        while (choice!=4);
 }
 void reports(int source,int dest,float weight,int vehicleType){
         int D=distance[source][dest];
@@ -346,6 +352,29 @@ void reports(int source,int dest,float weight,int vehicleType){
         printf("Final Charge to Customer:%-10.2f LKR\n",customerCharge);
         printf("===================================\n");
 }
+void viewDeliveries(){
+    if (deliveryCount==0){
+        printf("\nNo delivery  records yet. \n");
+        return;
+        }
+    printf("\n-------------DELIVERY RECORDS----------\n");
+    int i;
+    for(i=0;i<deliveryCount;i++){
+       printf("\nDelivery #%d\n",i+1);
+        printf("From: %-10s\n",cities[deliveries[i].source]);
+        printf("To: %-10s\n",cities[deliveries[i].destination]);
+        printf("Vehicle: %-10s\n",vehicleTypes[deliveries[i].vehicleType]);
+        printf("Weight: %-10.2f kg\n",deliveries[i].weight);
+        printf("Distance: %-10.2f km\n",deliveries[i].distance);
+        printf("Delivery Cost: %-10.2f LKR\n",deliveries[i].deliveryCost);
+        printf("Fuel Cost: %-10.2f LKR\n",deliveries[i].fuelCost);
+        printf("Total Cost: %-10.2f LKR\n",deliveries[i].totalCost);
+        printf("Profit: %-10.2f LKR\n",deliveries[i].profit);
+        printf("Customer Charge: %-10.2f LKR\n",deliveries[i].customerCharge);
+        printf("Estimated Time: %-10.2f hours\n",deliveries[i].time);
+        printf("------------------------------------\n");
+         }
+ }
 
 
 

@@ -35,6 +35,7 @@ void cityManagement();
 void distanceManagement();
 void vehicleManagement();
 void deliveryHandling();
+float findLeastCostRoute(int source,int dest,int path[]);
 void reports(int source,int dest,float weight,int vehicleType);
 void viewDeliveries();
 
@@ -237,6 +238,8 @@ void deliveryHandling(){
     float weight;
     int choice;
     int i;
+    int path[MAX_CITIES];
+    float minDistance=0;
     printf("-------DELIVERY REQUEST HANDLING------\n");
     do{
         printf("1.Enter a new report\n");
@@ -301,6 +304,8 @@ void deliveryHandling(){
             deliveryCount++;
             break;
             case 2:
+                minDistance=findLeastCostRoute(source-1,dest-1,path);
+                printf("\nLeast cost distance between %s and %s: %.2f km\n",cities[source-1],cities[dest-1],minDistance);
                 reports(source-1,dest-1,weight,vehicleType-1);
                 break;
             case 3:
@@ -351,6 +356,65 @@ void reports(int source,int dest,float weight,int vehicleType){
         printf("Profit (25%%):%-10.2f LKR\n",profit);
         printf("Final Charge to Customer:%-10.2f LKR\n",customerCharge);
         printf("===================================\n");
+}
+float findLeastCostRoute(int source,int dest,int path[]){
+    int visited[MAX_CITIES];
+    float cost[MAX_CITIES];
+    int prev[MAX_CITIES];
+    int i;
+    int j;
+    int k;
+    int n;
+    int minIndex;
+    float minDist;
+    for (i=0;i<cityCount;i++){
+        cost[i]=1e9;
+        visited[i]=0;
+        prev[i]=-1;
+    }
+    cost[source]=0;
+    for (j=0;j<cityCount-1;j++){
+        minDist=1e9;
+        minIndex=-1;
+        for(k=0;k<cityCount;k++){
+            if(!visited[j]&&cost[j]<minDist){
+                minDist=cost[j];
+                minIndex=j;
+            }
+        }
+        if (minIndex==-1){
+            break;
+        }
+        visited[minIndex]=1;
+        for (n=0;n<cityCount;n++){
+            if(distance[minIndex][n]>0&&!visited[n]){
+                float newDist=cost[minIndex]+distance[minIndex][n];
+                if(newDist<cost[n]){
+                    cost[n]=newDist;
+                    prev[n]=minIndex;
+                }
+            }
+        }
+    }
+    int stack[MAX_CITIES];
+    int top=0;
+    int current=dest;
+    while (current!=-1){
+        stack[top++]=current;
+        current=prev[current];
+    }
+    int index=0;
+    printf("\nShortest Route:");
+    int x;
+    for (x=top-1;x>=0;x--){
+        path[index++]=stack[x];
+        printf("%s",cities[stack[i]]);
+        if(i>0){
+            printf("->");
+        }
+        printf("\nTotal Distance: %.2f km\n",cost[dest]);
+    }
+    return cost[dest];
 }
 void viewDeliveries(){
     if (deliveryCount==0){
